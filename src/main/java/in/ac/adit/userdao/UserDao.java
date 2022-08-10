@@ -3,6 +3,7 @@ package in.ac.adit.userdao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import in.ac.adit.user.User;
@@ -49,8 +50,11 @@ public class UserDao {
 			pstmt=connection.prepareStatement("select email,password from loginsystem where email=? AND password=?");
 			pstmt.setString(1,userlogin.getEmail());
 			pstmt.setString(2,userlogin.getPassword());
-			pstmt.executeQuery();
-			return true;
+			ResultSet rs=pstmt.executeQuery();
+			if(rs.next()) {
+				return true;
+			}
+			return false;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
