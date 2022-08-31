@@ -3,9 +3,11 @@ package in.ac.adit.contoller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import in.ac.adit.user.User;
 import in.ac.adit.userdao.UserDao;
@@ -15,7 +17,7 @@ public class isAuthentication extends HttpServlet{
 		response.setContentType("text/html");
 		try {
 			PrintWriter out=response.getWriter();
-			out.println(request.getParameter("email"));
+			//out.println(request.getParameter("email"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -28,7 +30,11 @@ public class isAuthentication extends HttpServlet{
 		userlogin.setPassword(request.getParameter("password"));
 		
 		UserDao userdaologin=new UserDao();
+		String name=userdaologin.userName(userlogin);
+		System.out.println(name);
 		if(userdaologin.login(userlogin)) {
+			HttpSession session=request.getSession();
+			session.setAttribute("uname",name);
 			try {
 				response.sendRedirect("welcome.jsp");
 			} catch (IOException e) {

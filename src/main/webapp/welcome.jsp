@@ -8,7 +8,8 @@
 </head>
 <body>
 	<h1>welcome 
-	<%out.println("to java"); %>
+	<%String name=(String)session.getAttribute("uname");%>
+	<%=name %>
 	<h1>
 </body>
 </html>

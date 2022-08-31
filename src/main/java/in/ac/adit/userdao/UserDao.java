@@ -63,4 +63,23 @@ public class UserDao {
 		
 	}
 	
+	public String userName(User userName) {
+		try {
+			pstmt=connection.prepareStatement("select name from loginsystem where email=? AND password=?");
+			pstmt.setString(1,userName.getEmail());
+			pstmt.setString(2,userName.getPassword());
+			ResultSet rs=pstmt.executeQuery();
+			if(rs.next()) 
+			{
+				return rs.getString(1) ;
+			}
+			return null;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
 }
